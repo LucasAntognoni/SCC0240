@@ -1,2 +1,3 @@
-# SCC0240
- SCC0240 - Data Bases
+# SCC0240 - Data Bases
+
+Repository for class projects and exercises
