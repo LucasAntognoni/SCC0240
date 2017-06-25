@@ -1,6 +1,5 @@
-/*drop table testedoping;
+drop table testedoping;
 drop table lesao;
-drop table ocorrencia;
 drop table diagnostico_tratamento;
 drop table diagnostico;
 drop table consulta_sintomas;
@@ -19,9 +18,8 @@ drop table atleta;
 drop table equipe;
 drop table preparador_telefones;
 drop table preparador;
-drop table participante;
 drop table nacao;
-drop table esporte;*/
+drop table esporte;
 
 create table esporte (
     esporte_id NUMBER not null,
@@ -48,31 +46,27 @@ create table nacao (
         foreign key (esporte_preferido) references esporte (esporte_id)
 );
 
-create table participante (
-    participante_id NUMBER not null, -- cpf ou passaporte
+create table preparador (
+    -- decisao de projeto: nao garante participacao total com equipe
+    preparador_id NUMBER not null, -- cpf ou passaporte
     nome VARCHAR2(50) not null,
     sexo varchar2(6) not null,
     nascimento DATE not null,
     nacao_id NUMBER not null,
+    especializacao char(1) default '0' not null, -- se e atelta ou preparador; definido por trigger
     iscpf char(1) default 'S' not null, -- atualizada por trigger, indica se registro e cpf, senao, e passaporte
     
-    constraint pk_participante primary key (participante_id),
-    constraint fk_participante_nacao
-        foreign key (nacao_id) references nacao (nacao_id),
-    constraint ck_participante_sexo CHECK (sexo in ('Homem', 'Mulher')),
-    constraint ck_participante_registro CHECK (participante_id > 0),
-    constraint ck_participante_iscpf CHECK (iscpf in ('S', 'N'))
-);
-
-create table preparador (
-    -- decisao de projeto: nao garante participacao total com equipe
-    preparador_id number not null,
     codigo_postal varchar2(10),
     email varchar2(254),
     senha varchar2 (30) not null,
     
     constraint pk_preparador primary key (preparador_id),
-    constraint fk_preparador_participante foreign key (preparador_id) references participante (participante_id),
+    constraint fk_preparador_nacao
+        foreign key (nacao_id) references nacao (nacao_id),
+    constraint ck_preparador_sexo CHECK (sexo in ('Homem', 'Mulher')),
+    constraint ck_preparador_registro CHECK (preparador_id > 0),
+    constraint ck_preparador_iscpf CHECK (iscpf in ('S', 'N')),
+    
     constraint uq_preparador_email unique (email)
 );
 
@@ -97,14 +91,29 @@ create table equipe (
 );
 
 create table atleta (
-    atleta_id number not null,
+    -- decisão projeto:
+    --      ao inves de armazenar um isImpedido, armazenamos ultima_punicao
+    --      isto porque isimpedido depende da data de hoje e teria que ser atualizado diariamente
+    
+    atleta_id NUMBER not null, -- cpf ou passaporte
+    nome VARCHAR2(50) not null,
+    sexo varchar2(6) not null,
+    nascimento DATE not null,
+    nacao_id NUMBER not null,
+    especializacao char(1) default '0' not null, -- se e atelta ou preparador; definido por trigger
+    iscpf char(1) default 'S' not null, -- atualizada por trigger, indica se registro e cpf, senao, e passaporte
+    
     altura number(3) not null,
     peso number(3) not null,
     qpunicoes number(1) default 0 not null, -- atualizado por trigger
-    isimpedido char(1) default 'N' not null, -- atualizado por trigger
 
     constraint pk_atleta primary key (atleta_id),
-    constraint fk_atleta_participante foreign key (atleta_id) references participante (participante_id),
+    constraint fk_atleta_nacao
+        foreign key (nacao_id) references nacao (nacao_id),
+    constraint ck_atleta_sexo CHECK (sexo in ('Homem', 'Mulher')),
+    constraint ck_atleta_registro CHECK (atleta_id > 0),
+    constraint ck_atleta_iscpf CHECK (iscpf in ('S', 'N')),
+    
     constraint ck_atleta_altura CHECK (altura > 0),
     constraint ck_atleta_peso CHECK (peso > 0),
     constraint ck_atleta_isimpedido CHECK (isimpedido in ('S', 'N'))
@@ -254,39 +263,43 @@ create table diagnostico_tratamento (
         foreign key (tratamento_id) references tratamento (tratamento_id)
 );
 
-create table ocorrencia (
-    ocorrencia_id number not null,
+create table lesao (
+    lesao_id number not null,
     atleta_id number not null,
     medico_id number not null,
     esporte_id number not null,
     datahora date not null,
     
-    constraint pk_ocorrencia primary key (ocorrencia_id),
-    constraint uq_ocorrencia_realkey unique (atleta_id, medico_id, esporte_id, datahora),
-    constraint fk_ocorrencia_atleta
+    descricao varchar2 (1000) not null,
+    
+    constraint pk_lesao primary key (lesao_id),
+    constraint uq_lesao_realkey unique (atleta_id, medico_id, esporte_id, datahora),
+    constraint fk_lesao_atleta
         foreign key (atleta_id) references atleta (atleta_id),
-    constraint fk_ocorrencia_medico
+    constraint fk_lesao_medico
         foreign key (medico_id) references medico (medico_id),
-    constraint fk_ocorrencia_esporte
+    constraint fk_lesao_esporte
         foreign key (esporte_id) references esporte (esporte_id)
 );
 
-create table lesao (
-    ocorrencia_id number not null,
-    descricao varchar2 (1000) not null,
-    
-    constraint pk_lesao primary key (ocorrencia_id),
-    constraint fk_lesao_ocorrencia foreign key (ocorrencia_id) references ocorrencia (ocorrencia_id)
-        on delete cascade
-);
-
 create table testedoping (
-    ocorrencia_id number not null,
+    testedoping_id number not null,
+    atleta_id number not null,
+    medico_id number not null,
+    esporte_id number not null,
+    datahora date not null,
+    
     ispositivo char(1) not null,
     resultado varchar2 (300) not null,
     
-    constraint pk_testedoping primary key (ocorrencia_id),
-    constraint fk_testedoping_ocorrencia foreign key (ocorrencia_id) references ocorrencia (ocorrencia_id)
-        on delete cascade,
-    constraint ck_testedoping_resultado CHECK (resultado in ('S', 'N'))
+    constraint pk_testedoping primary key (testedoping_id),
+    constraint uq_testedoping_realkey unique (atleta_id, medico_id, esporte_id, datahora),
+    constraint fk_testedoping_atleta
+        foreign key (atleta_id) references atleta (atleta_id),
+    constraint fk_testedoping_medico
+        foreign key (medico_id) references medico (medico_id),
+    constraint fk_testedoping_esporte
+        foreign key (esporte_id) references esporte (esporte_id),
+    
+    constraint ck_testedoping_ispositivo CHECK (ispositivo in ('S', 'N'))
 );
