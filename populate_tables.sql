@@ -23,11 +23,6 @@ delete from esporte;
 
 -- table lesao
 -- table ocorrencia
--- table diagnostico_tratamento
--- table diagnostico
--- table consulta_sintomas
--- table consulta
--- table tratamento
 -- table medico_telefones
 -- table atleta_rotina
 -- table rotina_recuperacao
@@ -35,6 +30,7 @@ delete from esporte;
 -- table rotina_preparacao
 -- table preparacao
 -- table rotina
+-- table preparador_telefones
 
 
 -- table esporte (esporte_id, nome, descricao)
@@ -47,7 +43,7 @@ values (1,'Brasil','América do Sul',1);
 insert into nacao (nacao_id, nome, continente, esporte_preferido)
 values (2,'Alemanha','Europa',1);
 
--- table atleta (atleta_id, nome, sexo, nascimento, nacao_id, [especializacao, iscpf], altura, peso, [qpunicoes, isimpedido])
+-- table atleta (atleta_id, nome, sexo, nascimento, nacao_id, [iscpf], altura, peso, [qpunicoes, isimpedido])
 insert into atleta (atleta_id, nome, sexo, nascimento, nacao_id, altura, peso)
 values (1, 'Eduardo', 'Homem', TO_DATE('19/07/1994', 'dd/mm/yyyy'), 1, 186, 83);
 
@@ -63,10 +59,34 @@ values (2, 1, 1, 1, TO_DATE('01/05/2017', 'dd/mm/yyyy'), 'N', 'Nenhuma irregular
 insert into testedoping (testedoping_id, atleta_id, medico_id, esporte_id, datahora, ispositivo, resultado)
 values (3, 1, 1, 1, TO_DATE('11/05/2017', 'dd/mm/yyyy'), 'S', 'Uso de anabolizantes detectado.');
 
--- table ocorrencia
+-- table preparador (preparador_id, nome, sexo, nascimento, nacao_id, [iscpf, codigo_postal, email], senha)
+insert into preparador (preparador_id, nome, sexo, nascimento, nacao_id, senha)
+values (1, 'Gustavo Batista', 'Homem', TO_DATE('21/03/1981', 'dd/mm/yyyy'), 1, 'aBc123');
 
--- table preparador
--- table preparador_telefones
--- table equipe
+-- table consulta (consulta_id, medico_id, atleta_id, datahora)
+insert into consulta (consulta_id, medico_id, atleta_id, datahora)
+values (1, 1, 1, TO_DATE('12/06/2015', 'dd/mm/yyyy'));
 
--- table atleta_participa
+-- table consulta_sintomas (consulta_id, sintoma)
+insert into consulta_sintomas (consulta_id, sintoma)
+values (1, 'Dor de cabeça');
+
+-- table diagnostico (diagnostico_id, descricao)
+insert into diagnostico (diagnostico_id, descricao)
+values (1, 'Estresse decorrente a rotina.');
+
+-- table tratamento (tratamento_id, metodo, efetividade)
+insert into tratamento (tratamento_id, metodo, efetividade)
+values (1, 'Neosaldina 3x ao dia.', 80);
+
+-- table diagnostico_tratamento (diagnostico_id, tratamento_id)
+insert into diagnostico_tratamento (diagnostico_id, tratamento_id)
+values (1, 1);
+
+-- table equipe (equipe_id, esporte_id)
+insert into equipe (equipe_id, esporte_id)
+values (1, 1);
+
+-- table atleta_participa (atleta_id, equipe_id)
+insert into atleta_participa (atleta_id, equipe_id)
+values (1, 1);
