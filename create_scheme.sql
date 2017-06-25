@@ -210,7 +210,7 @@ create table medico_telefones (
 create table tratamento (
     -- decisao de projeto: nao garante participacao total com diagnóstico
     tratamento_id number not null,
-    metodo varchar2(30) not null,
+    metodo varchar2(500) not null,
     efetividade varchar2(30) not null,
     
     constraint pk_tratamento primary key (tratamento_id)
