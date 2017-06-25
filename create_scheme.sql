@@ -64,7 +64,6 @@ create table preparador (
         foreign key (nacao_id) references nacao (nacao_id),
     constraint ck_preparador_sexo CHECK (sexo in ('Homem', 'Mulher')),
     constraint ck_preparador_registro CHECK (preparador_id > 0),
-    constraint ck_preparador_iscpf CHECK (iscpf in ('S', 'N')),
     
     constraint uq_preparador_email unique (email)
 );
@@ -86,7 +85,8 @@ create table equipe (
     constraint pk_equipe primary key (equipe_id),
     constraint fk_equipe_esporte
         foreign key (esporte_id) references esporte(esporte_id),
-    constraint fk_equipe_preparador foreign key (equipe_id) references preparador (preparador_id)
+    constraint fk_equipe_preparador
+        foreign key (equipe_id) references preparador (preparador_id)
 );
 
 create table atleta (
@@ -110,11 +110,9 @@ create table atleta (
         foreign key (nacao_id) references nacao (nacao_id),
     constraint ck_atleta_sexo CHECK (sexo in ('Homem', 'Mulher')),
     constraint ck_atleta_registro CHECK (atleta_id > 0),
-    constraint ck_atleta_iscpf CHECK (iscpf in ('S', 'N')),
     
     constraint ck_atleta_altura CHECK (altura > 0),
-    constraint ck_atleta_peso CHECK (peso > 0),
-    constraint ck_atleta_isimpedido CHECK (isimpedido in ('S', 'N'))
+    constraint ck_atleta_peso CHECK (peso > 0)
 );
 
 create table atleta_participa (
