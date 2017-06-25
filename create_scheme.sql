@@ -53,7 +53,6 @@ create table preparador (
     sexo varchar2(6) not null,
     nascimento DATE not null,
     nacao_id NUMBER not null,
-    especializacao char(1) default '0' not null, -- se e atelta ou preparador; definido por trigger
     iscpf char(1) default 'S' not null, -- atualizada por trigger, indica se registro e cpf, senao, e passaporte
     
     codigo_postal varchar2(10),
@@ -100,7 +99,6 @@ create table atleta (
     sexo varchar2(6) not null,
     nascimento DATE not null,
     nacao_id NUMBER not null,
-    especializacao char(1) default '0' not null, -- se e atelta ou preparador; definido por trigger
     iscpf char(1) default 'S' not null, -- atualizada por trigger, indica se registro e cpf, senao, e passaporte
     
     altura number(3) not null,
