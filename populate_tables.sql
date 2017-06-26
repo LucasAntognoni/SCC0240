@@ -74,6 +74,8 @@ insert into consulta (consulta_id, medico_id, atleta_id, datahora)
 values (2, 1, 2, TO_DATE('13/06/2015', 'dd/mm/yyyy'));
 insert into consulta (consulta_id, medico_id, atleta_id, datahora)
 values (3, 2, 2, TO_DATE('14/06/2015', 'dd/mm/yyyy'));
+insert into consulta (consulta_id, medico_id, atleta_id, datahora)
+values (4, 1, 1, TO_DATE('12/07/2015', 'dd/mm/yyyy'));
 
 -- table consulta_sintomas (consulta_id, sintoma)
 insert into consulta_sintomas (consulta_id, sintoma)
@@ -82,6 +84,8 @@ insert into consulta_sintomas (consulta_id, sintoma)
 values (2, 'Dor de estomago');
 insert into consulta_sintomas (consulta_id, sintoma)
 values (3, 'Dificuldade para dormir');
+insert into consulta_sintomas (consulta_id, sintoma)
+values (4, 'Torcicolo no pescoço');
 
 -- table diagnostico (diagnostico_id, descricao)
 insert into diagnostico (diagnostico_id, descricao)
@@ -90,6 +94,8 @@ insert into diagnostico (diagnostico_id, descricao)
 values (2, 'Alimentação precária.');
 insert into diagnostico (diagnostico_id, descricao)
 values (3, 'Ansiedade leve.');
+insert into diagnostico (diagnostico_id, descricao)
+values (4, 'Exposição prolongada ao mal posicionamento.');
 
 -- table tratamento (tratamento_id, metodo, efetividade)
 insert into tratamento (tratamento_id, metodo, efetividade)
@@ -98,6 +104,8 @@ insert into tratamento (tratamento_id, metodo, efetividade)
 values (2, 'Omeprazol 1x ao dia.', 65);
 insert into tratamento (tratamento_id, metodo, efetividade)
 values (3, 'Mix de chá de camomila com hortelã/capim-cidreira/erva-doce, 500ml, 1 ou 2 horas antes de dormir.', 72);
+insert into tratamento (tratamento_id, metodo, efetividade)
+values (4, 'Relaxante muscular genérico até a dor passar; máximo 3 dias.', 70);
 
 -- table diagnostico_tratamento (diagnostico_id, tratamento_id)
 insert into diagnostico_tratamento (diagnostico_id, tratamento_id)
@@ -106,6 +114,8 @@ insert into diagnostico_tratamento (diagnostico_id, tratamento_id)
 values (2, 2);
 insert into diagnostico_tratamento (diagnostico_id, tratamento_id)
 values (3, 3);
+insert into diagnostico_tratamento (diagnostico_id, tratamento_id)
+values (4, 4);
 
 -- table equipe (equipe_id, esporte_id)
 insert into equipe (equipe_id, esporte_id)
@@ -114,3 +124,5 @@ values (1, 1);
 -- table atleta_participa (atleta_id, equipe_id)
 insert into atleta_participa (atleta_id, equipe_id)
 values (1, 1);
+insert into atleta_participa (atleta_id, equipe_id)
+values (2, 1);
