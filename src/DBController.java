@@ -2,9 +2,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-/**
- * Created by lucas on 27/06/17.
- */
+import java.sql.*;
+
+
 public class DBController {
 
     @FXML // fx:id = botaoInserir
@@ -15,6 +15,22 @@ public class DBController {
 
     @FXML // fx:id = botaoDeletar
     private Button botaoDeletar;
+    
+    @FXML
+    void handleConectar(ActionEvent event) throws ClassNotFoundException, SQLException {
+
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        // Instance connection
+        Connection connection = DriverManager.getConnection
+                ("jdbc:oracle:thin:8632455/aaa@grad.icmc.usp.br:15215:orcl");
+
+        // Instance statement
+        Statement statement = connection.createStatement();
+
+        // Do query
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM atleta");
+    }
 
 
     @FXML
