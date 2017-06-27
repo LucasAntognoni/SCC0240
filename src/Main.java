@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -14,9 +16,15 @@ public class Main extends Application {
 
 
     private static BorderPane root = new BorderPane();
+    private ObservableList<Atleta> atletaData = FXCollections.observableArrayList();
+
 
     public static BorderPane getRoot() {
         return root;
+    }
+
+    public ObservableList<Atleta> getAtletaData() {
+        return atletaData;
     }
 
     @Override
