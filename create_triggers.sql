@@ -1,3 +1,6 @@
+-- O cógio abaixo no funciona no ambiente SQL Developer na execução plena ....
+-- Precisa selecionar e executar cada um dos creates separadamente
+
 create or replace trigger tr_preparador_iscpf
 before insert or update on preparador
 for each row
