@@ -1,4 +1,4 @@
-select a.nome as nome_atleta, a.atleta_id, n.nome as nome_nacao, a.nascimento
+select distinct a.nome as nome_atleta, a.atleta_id as documento_atleta, n.nome as nome_nacao, a.nascimento
 from atleta a
 	join consulta c on (a.atleta_id = c.atleta_id)
 	join medico m on (m.medico_id = c.medico_id)
