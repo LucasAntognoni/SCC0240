@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b1791113-7687-4f21-9ce8-9fcf80ccd598" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DBController.java" afterPath="$PROJECT_DIR$/src/DBController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
-    </list>
+    <list default="true" id="b1791113-7687-4f21-9ce8-9fcf80ccd598" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -574,12 +571,12 @@
       <workItem from="1498581035321" duration="5406000" />
       <workItem from="1498591139597" duration="5256000" />
       <workItem from="1498601001098" duration="29000" />
-      <workItem from="1498601594170" duration="5094000" />
+      <workItem from="1498601594170" duration="5243000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21453000" />
+    <option name="totallyTimeSpent" value="21602000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="723" extended-state="6" />
