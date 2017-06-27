@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutX="113.0" layoutY="361.0" spacing="100.0">
+         <children>
+            <Button layoutX="73.0" layoutY="361.0" mnemonicParsing="false" text="Inserir" />
+            <Button layoutX="148.0" layoutY="361.0" mnemonicParsing="false" text="Editar" />
+            <Button layoutX="224.0" layoutY="361.0" mnemonicParsing="false" text="Deletar" />
+         </children>
+      </HBox>
+      <TableView layoutY="-3.0" prefHeight="354.0" prefWidth="610.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn prefWidth="75.0" text="ID" />
+            <TableColumn prefWidth="75.0" text="Nome" />
+            <TableColumn prefWidth="75.0" text="Sexo" />
+            <TableColumn prefWidth="75.0" text="Data de Nascimento" />
+            <TableColumn prefWidth="75.0" text="Naç" />
+            <TableColumn prefWidth="75.0" text="CPF?" />
+            <TableColumn prefWidth="75.0" text="Altura" />
+            <TableColumn prefWidth="75.0" text="Peso" />
+            <TableColumn prefWidth="75.0" text="Punições" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
