@@ -24,7 +24,7 @@ drop table esporte;
 create table esporte (
     esporte_id NUMBER not null,
     nome VARCHAR2(30) not null,
-    descricao varchar2(200) not null,
+    descricao varchar2(500) not null,
     
     constraint pk_esporte primary key (esporte_id),
     constraint uq_esporte_nome unique (nome)
