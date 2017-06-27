@@ -14,17 +14,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-
     private static BorderPane root = new BorderPane();
-    private ObservableList<Atleta> atletaData = FXCollections.observableArrayList();
-
 
     public static BorderPane getRoot() {
         return root;
-    }
-
-    public ObservableList<Atleta> getAtletaData() {
-        return atletaData;
     }
 
     @Override
