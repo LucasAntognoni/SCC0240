@@ -21,14 +21,17 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws Exception {
+
+        GenReports.genReport1();
+        GenReports.genReport2();
+        GenReports.genReport3();
 
         URL menuUrl = getClass().getResource("Menu.fxml");
         MenuBar menu = FXMLLoader.load( menuUrl );
 
         URL mainPaneUrl = getClass().getResource("MainPane.fxml");
         AnchorPane mainPane = FXMLLoader.load( mainPaneUrl );
-
 
         root.setTop(menu);
         root.setCenter(mainPane);
