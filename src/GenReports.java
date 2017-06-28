@@ -12,33 +12,33 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Paragraph; /* To push XML data into PDF */
 import com.sun.rowset.WebRowSetImpl; /* Rowset of SQL output data */
 
-class Main {
+class GenReports {
 
-    public static void main (String[] args) throws Exception
+    public static void genReport1() throws Exception
     {
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
         // Instance connection
         Connection connection = DriverManager.getConnection
-                ("jdbc:oracle:thin:8632455/aaa@grad.icmc.usp.br:15215:orcl");
+                ("jdbc:oracle:thin:8602430/a@grad.icmc.usp.br:15215:orcl");
 
         // Instance statement
         Statement statement = connection.createStatement();
 
         // Query result
-        ResultSet resultSet = statement.executeQuery("select a.nome as nome_atleta, a.atleta_id, n.nome as nome_nacao, a.nascimento " +
-                " from atleta a " +
-                "   join consulta c on (a.atleta_id = c.atleta_id) " +
-                "   join medico m on (m.medico_id = c.medico_id) " +
-                "   join atleta_participa ap on (ap.atleta_id = a.atleta_id) " +
-                "   join equipe eq on (ap.equipe_id = eq.equipe_id) " +
-                "   join preparador p on (p.preparador_id = eq.equipe_id) " +
-                "   join esporte e on (e.esporte_id = eq.esporte_id) " +
-                "   join nacao n on (a.nacao_id = n.nacao_id) " +
-                " where upper(e.nome) = 'FUTEBOL' " +
-                "   and upper(m.nome) = 'JORGE PEREIRA' " +
-                "   and upper(p.nome) = 'GUSTAVO BATISTA'");
-        //ResultSet resultSet = statement.executeQuery("SELECT * FROM atleta");
+        ResultSet resultSet = statement.executeQuery("SELECT DISTINCT a.nome AS nome_atleta, a.atleta_id AS documento_atleta, n.nome AS nome_nacao, a.nascimento " +
+                "FROM atleta a " +
+                "  JOIN consulta c ON (a.atleta_id = c.atleta_id) " +
+                "  JOIN medico m ON (m.medico_id = c.medico_id) " +
+                "  JOIN atleta_participa ap ON (ap.atleta_id = a.atleta_id) " +
+                "  JOIN equipe eq ON (ap.equipe_id = eq.equipe_id) " +
+                "  JOIN preparador p ON (p.preparador_id = eq.equipe_id) " +
+                "  JOIN esporte e ON (e.esporte_id = eq.esporte_id) " +
+                "  JOIN nacao n ON (a.nacao_id = n.nacao_id) " +
+                "WHERE upper(e.nome) = 'FUTEBOL' " +
+                "  AND upper(m.nome) = 'JORGE PEREIRA' " +
+                "  AND upper(p.nome) = 'GUSTAVO BATISTA' ");
+        //ResultSet resultSet = statement.executeQuery("SELECT atleta.nome, atleta.atleta_id FROM atleta");
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int rsmdColumnCount = rsmd.getColumnCount();
 
@@ -48,19 +48,17 @@ class Main {
         pdfData.open();
 
         // PDF table
-        //PdfPTable pdfTable = new PdfPTable(1);
+        PdfPTable pdfTable = new PdfPTable(rsmdColumnCount);
 
         // Populate
-        //PdfPCell pdfTableCell;
+        PdfPCell pdfTableCell;
         while (resultSet.next()) {
 
             for (int iColumn = 1; iColumn <= rsmdColumnCount; iColumn++) {
                 String value = resultSet.getString(iColumn);
                 System.out.print(rsmd.getColumnName(iColumn) + ": " + value + "; ");
-
-                //String value = resultSet.getString(iColumn);
-                //pdfTableCell = new PdfPCell(new Phrase(value));
-                //pdfTable.addCell(pdfTableCell);
+                pdfTableCell = new PdfPCell(new Phrase(value));
+                pdfTable.addCell(pdfTableCell);
 
                 if (iColumn == rsmdColumnCount)
                     System.out.print("\n");
@@ -83,13 +81,23 @@ class Main {
         }
 
         // Attach
-        //pdfData.add(pdfTable);
-        //pdfData.close();
+        pdfData.add(pdfTable);
+        pdfData.close();
 
         // Close all
         resultSet.close();
         statement.close();
         connection.close();
-        System.out.println("All done.");
+        System.out.println("Generated report.");
+    }
+
+    public static void genReport2() throws Exception
+    {
+        System.out.println();
+    }
+
+    public static void genReport3() throws Exception
+    {
+        System.out.println();
     }
 }
