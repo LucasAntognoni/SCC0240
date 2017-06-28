@@ -20,7 +20,7 @@ class GenReports {
 
         // Instance connection
         Connection connection = DriverManager.getConnection
-                ("jdbc:oracle:thin:8602430/a@grad.icmc.usp.br:15215:orcl");
+                ("jdbc:oracle:thin:8936951/a@grad.icmc.usp.br:15215:orcl");
 
         // Instance statement
         Statement statement = connection.createStatement();

@@ -122,9 +122,9 @@ public class DBController {
         from atleta;*/
 
         // Close all
-        resultSet.close();
-        statement.close();
-        connection.close();
+//        resultSet.close();
+//        statement.close();
+//        connection.close();
 
         parseData(this.resultSet);
     }
@@ -153,7 +153,7 @@ public class DBController {
         // Instance statement
         Statement statement = connection.createStatement();
 
-        statement.executeUpdate("DELETE FROM ATLETA WHERE ATLETA_ID = atletaID");
+        statement.executeUpdate("DELETE FROM ATLETA WHERE ATLETA_ID = " + atletaID);
 
         statement.close();
         connection.close();
