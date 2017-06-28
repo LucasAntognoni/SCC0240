@@ -153,7 +153,12 @@ public class DBController {
         // Instance statement
         Statement statement = connection.createStatement();
 
-        statement.executeUpdate("DELETE FROM ATLETA WHERE ATLETA_ID = " + atletaID);
+        try {
+            statement.executeUpdate("DELETE FROM ATLETA WHERE ATLETA_ID = " + atletaID);
+        }
+        catch (Exception e) {
+            System.out.print("Erro ao deletar atleta: dependência encontrada!");
+        }
 
         statement.close();
         connection.close();
