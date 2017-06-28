@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+   <menus>
+      <Menu fx:id="gerenciar" mnemonicParsing="false" onAction="#menuGerenciar" text="Gerenciar"/>
+      <Menu fx:id="relatorio" mnemonicParsing="false" onAction="#menuRelatorio" text="Relatórios"/>
+      <Menu fx:id="sobre" mnemonicParsing="false" onAction="#menuSobre" text="Sobre"/>
+   </menus>
+</MenuBar>
