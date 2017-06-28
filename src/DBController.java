@@ -87,7 +87,7 @@ public class DBController {
 
     @FXML
     private void initialize() {
-        // Inicializa a tablea de pessoa com duas colunas.
+
         colID.setCellValueFactory(cellData -> cellData.getValue().id_atletaProperty());
         colNome.setCellValueFactory(cellData -> cellData.getValue().nomeProperty());
         colSexo.setCellValueFactory(cellData -> cellData.getValue().sexoProperty());
@@ -116,15 +116,6 @@ public class DBController {
 
         // Do query
         this.resultSet = statement.executeQuery("SELECT atleta_id, nome, sexo, nascimento, nacao_id, iscpf, altura, peso, qpunicoes, sf_isatletaimpedido(atleta_id) as impedido FROM atleta");
-
-        /*select atleta_id, nome, sexo, nascimento, nacao_id, iscpf,
-        altura, peso, qpunicoes, sf_isatletaimpedido(atleta_id) as impedido
-        from atleta;*/
-
-        // Close all
-//        resultSet.close();
-//        statement.close();
-//        connection.close();
 
         parseData(this.resultSet);
     }

@@ -1,7 +1,5 @@
 import javafx.beans.property.*;
 
-import java.time.LocalDate;
-
 public class Atleta {
 
     private final StringProperty id_atleta;
