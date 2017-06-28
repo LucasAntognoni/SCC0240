@@ -2,10 +2,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import java.sql.*;
 
@@ -112,7 +109,7 @@ public class DBController {
 
         // Instance connection
         Connection connection = DriverManager.getConnection
-                ("jdbc:oracle:thin:8632455/aaa@grad.icmc.usp.br:15215:orcl");
+                ("jdbc:oracle:thin:8936951/a@grad.icmc.usp.br:15215:orcl");
 
         // Instance statement
         Statement statement = connection.createStatement();
@@ -123,6 +120,11 @@ public class DBController {
         /*select atleta_id, nome, sexo, nascimento, nacao_id, iscpf,
         altura, peso, qpunicoes, sf_isatletaimpedido(atleta_id) as impedido
         from atleta;*/
+
+        // Close all
+        resultSet.close();
+        statement.close();
+        connection.close();
 
         parseData(this.resultSet);
     }
@@ -138,7 +140,22 @@ public class DBController {
     }
 
     @FXML
-    void handleDeletar(ActionEvent event){
+    void handleDeletar(ActionEvent event) throws ClassNotFoundException, SQLException {
 
+        String atletaID  = tabelaAtleta.getSelectionModel().getSelectedItem().getId_atleta();
+
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        // Instance connection
+        Connection connection = DriverManager.getConnection
+                ("jdbc:oracle:thin:8936951/a@grad.icmc.usp.br:15215:orcl");
+
+        // Instance statement
+        Statement statement = connection.createStatement();
+
+        statement.executeUpdate("DELETE FROM ATLETA WHERE ATLETA_ID = atletaID");
+
+        statement.close();
+        connection.close();
     }
 }
