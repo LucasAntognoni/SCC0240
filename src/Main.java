@@ -23,9 +23,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        GenReports.genReport1();
-        GenReports.genReport2();
-        GenReports.genReport3();
+        //GenReports.genReport1(nome da modalidade, nome do médico, nome do preparador);
+        //GenReports.genReport2(nome do país);
+        //GenReports.genReport3();
 
         URL menuUrl = getClass().getResource("Menu.fxml");
         MenuBar menu = FXMLLoader.load( menuUrl );

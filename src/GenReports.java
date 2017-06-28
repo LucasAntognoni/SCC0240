@@ -14,7 +14,7 @@ import com.sun.rowset.WebRowSetImpl; /* Rowset of SQL output data */
 
 class GenReports {
 
-    public static void genReport1() throws Exception
+    public static void genReport1(String mod_name, String med_name, String prep_name) throws Exception
     {
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -35,49 +35,44 @@ class GenReports {
                 "  JOIN preparador p ON (p.preparador_id = eq.equipe_id) " +
                 "  JOIN esporte e ON (e.esporte_id = eq.esporte_id) " +
                 "  JOIN nacao n ON (a.nacao_id = n.nacao_id) " +
-                "WHERE upper(e.nome) = 'FUTEBOL' " +
-                "  AND upper(m.nome) = 'JORGE PEREIRA' " +
-                "  AND upper(p.nome) = 'GUSTAVO BATISTA' ");
-        //ResultSet resultSet = statement.executeQuery("SELECT atleta.nome, atleta.atleta_id FROM atleta");
+                "WHERE upper(e.nome) = " + mod_name +
+                "  AND upper(m.nome) = " + med_name +
+                "  AND upper(p.nome) = " + prep_name);
+
+        // Metadata
         ResultSetMetaData rsmd = resultSet.getMetaData();
         int rsmdColumnCount = rsmd.getColumnCount();
 
         // PDF form
         Document pdfData = new Document();
-        PdfWriter.getInstance(pdfData, new FileOutputStream("query_as_pdf.pdf"));
+        PdfWriter.getInstance(pdfData, new FileOutputStream("query_reportatletas.pdf"));
         pdfData.open();
 
         // PDF table
+        PdfPCell pdfTableCell;
         PdfPTable pdfTable = new PdfPTable(rsmdColumnCount);
 
+        // This is totally not cool
+        pdfTableCell = new PdfPCell(new Phrase("Nome do atleta"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("ID do atleta"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Nacionalidade"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Data de nascimento"));
+        pdfTable.addCell(pdfTableCell);
+
         // Populate
-        PdfPCell pdfTableCell;
         while (resultSet.next()) {
 
             for (int iColumn = 1; iColumn <= rsmdColumnCount; iColumn++) {
                 String value = resultSet.getString(iColumn);
-                System.out.print(rsmd.getColumnName(iColumn) + ": " + value + "; ");
                 pdfTableCell = new PdfPCell(new Phrase(value));
                 pdfTable.addCell(pdfTableCell);
-
-                if (iColumn == rsmdColumnCount)
-                    System.out.print("\n");
             }
-            //String aName = resultSet.getString("nome_atleta");
-            //pdfTableCell = new PdfPCell(new Phrase(aName));
-            //pdfTable.addCell(pdfTableCell);
-
-            //String aID = resultSet.getString("a.atleta_id");
-            //pdfTableCell = new PdfPCell(new Phrase(aID));
-            //pdfTable.addCell(pdfTableCell);
-
-            //String nName = resultSet.getString("nome_nacao");
-            //pdfTableCell = new PdfPCell(new Phrase(nName));
-            //pdfTable.addCell(pdfTableCell);
-
-            //String aBDate = resultSet.getString("a.nascimento");
-            //pdfTableCell = new PdfPCell(new Phrase(aBDate));
-            //pdfTable.addCell(pdfTableCell);
         }
 
         // Attach
@@ -91,13 +86,147 @@ class GenReports {
         System.out.println("Generated report.");
     }
 
-    public static void genReport2() throws Exception
+    public static void genReport2(String country_name) throws Exception
     {
-        System.out.println();
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        // Instance connection
+        Connection connection = DriverManager.getConnection
+                ("jdbc:oracle:thin:8602430/a@grad.icmc.usp.br:15215:orcl");
+
+        // Instance statement
+        Statement statement = connection.createStatement();
+
+        // Query result
+        ResultSet resultSet = statement.executeQuery(" select medico_id, nome, crm, endereco, quantidade from " +
+            " ( " +
+                    " select m.medico_id, m.nome, m.crm, m.endereco, count (distinct a.atleta_id) as quantidade " +
+                    " from medico m " +
+                    " join consulta c on (c.MEDICO_ID = m.medico_id) " +
+                    " join atleta a on (c.ATLETA_ID = a.atleta_id) " +
+                    " join nacao n on (a.nacao_id = n.nacao_id) " +
+                    " where upper(n.nome) = " + country_name +
+                    " group by m.medico_id, m.nome, m.crm, m.endereco " +
+            " ) " +
+        " where quantidade >= 1 ");
+
+        // Metadata
+        ResultSetMetaData rsmd = resultSet.getMetaData();
+        int rsmdColumnCount = rsmd.getColumnCount();
+
+        // PDF form
+        Document pdfData = new Document();
+        PdfWriter.getInstance(pdfData, new FileOutputStream("query_reportmedicos.pdf"));
+        pdfData.open();
+
+        // PDF table
+        PdfPCell pdfTableCell;
+        PdfPTable pdfTable = new PdfPTable(rsmdColumnCount);
+
+        // This is totally not cool
+        pdfTableCell = new PdfPCell(new Phrase("ID do médico"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Nome"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("CRM"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Endereço"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Número de pacientes"));
+        pdfTable.addCell(pdfTableCell);
+
+        // Populate
+        while (resultSet.next()) {
+
+            for (int iColumn = 1; iColumn <= rsmdColumnCount; iColumn++) {
+                String value = resultSet.getString(iColumn);
+                pdfTableCell = new PdfPCell(new Phrase(value));
+                pdfTable.addCell(pdfTableCell);
+            }
+        }
+
+        // Attach
+        pdfData.add(pdfTable);
+        pdfData.close();
+
+        // Close all
+        resultSet.close();
+        statement.close();
+        connection.close();
+        System.out.println("Generated report.");
     }
 
     public static void genReport3() throws Exception
     {
-        System.out.println();
+         Class.forName("oracle.jdbc.driver.OracleDriver");
+
+        // Instance connection
+        Connection connection = DriverManager.getConnection
+                ("jdbc:oracle:thin:8602430/a@grad.icmc.usp.br:15215:orcl");
+
+        // Instance statement
+        Statement statement = connection.createStatement();
+
+        // Query result
+        ResultSet resultSet = statement.executeQuery(" select p.preparador_id, p.nome, p.iscpf as brasileiro, " +
+                "    count(distinct td.atleta_id) as pegos_doping, " +
+                "    count(distinct a.atleta_id) as total_atletas, " +
+                "    (case count(distinct a.atleta_id) " +
+                "    when 0 then 0 " +
+                "    else (count(distinct td.atleta_id) / count(distinct a.atleta_id)) " +
+                "    end) as razao " +
+                " from preparador p " +
+                "    join atleta_participa ap on (p.preparador_id = ap.equipe_id) " +
+                "    join atleta a on (a.atleta_id = ap.atleta_id) " +
+                "    left join testedoping td on (td.ATLETA_ID = a.atleta_id and td.ispositivo = 'S') " +
+                " group by p.preparador_id, p.nome, p.iscpf " +
+                " order by razao desc");
+
+        // Metadata
+        ResultSetMetaData rsmd = resultSet.getMetaData();
+        int rsmdColumnCount = rsmd.getColumnCount();
+
+        // PDF form
+        Document pdfData = new Document();
+        PdfWriter.getInstance(pdfData, new FileOutputStream("query_reporttreinadores.pdf"));
+        pdfData.open();
+
+        // PDF table
+        PdfPCell pdfTableCell;
+        PdfPTable pdfTable = new PdfPTable(rsmdColumnCount);
+
+        // This is totally not cool
+        pdfTableCell = new PdfPCell(new Phrase("ID do preparador"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Nome"));
+        pdfTable.addCell(pdfTableCell);
+
+        pdfTableCell = new PdfPCell(new Phrase("Brasileiro?"));
+        pdfTable.addCell(pdfTableCell);
+
+        // Populate
+        while (resultSet.next()) {
+
+            for (int iColumn = 1; iColumn <= rsmdColumnCount; iColumn++) {
+                String value = resultSet.getString(iColumn);
+                pdfTableCell = new PdfPCell(new Phrase(value));
+                pdfTable.addCell(pdfTableCell);
+            }
+        }
+
+        // Attach
+        pdfData.add(pdfTable);
+        pdfData.close();
+
+        // Close all
+        resultSet.close();
+        statement.close();
+        connection.close();
+        System.out.println("Generated report.");
     }
 }
