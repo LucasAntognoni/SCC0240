@@ -1,6 +1,6 @@
 import javafx.beans.property.*;
 
-public class Atleta {
+public class DataSerialObject {
 
     private final StringProperty id_atleta;
     private final StringProperty nome;
@@ -14,14 +14,15 @@ public class Atleta {
     private final StringProperty impedido;
 
 
-    public Atleta(){
+    public DataSerialObject()
+    {
         this(null, null, null, null, null, null, null, null, null, null);
     }
 
-    public Atleta(String atleta, String nome, String sexo, String nascimento,
-                  String nacao, String cpf, String altura, String peso, String punicoes,
-                  String impedido) {
-
+    public DataSerialObject(String atleta, String nome, String sexo, String nascimento,
+                            String nacao, String cpf, String altura, String peso, String punicoes,
+                            String impedido)
+    {
         this.id_atleta = new SimpleStringProperty(atleta);
         this.nome = new SimpleStringProperty(nome);
         this.sexo = new SimpleStringProperty(sexo);
