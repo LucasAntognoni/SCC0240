@@ -33,10 +33,10 @@
                <children>
                   <HBox alignment="CENTER" layoutX="6.0" prefHeight="60.0" prefWidth="598.0" spacing="20.0">
                      <children>
-                        <Button fx:id="botaoConectar" mnemonicParsing="false" onAction="#handleConectar" text="Recuperar Tabela" />
-                        <Button fx:id="botaoInserir" mnemonicParsing="false" onAction="#handleInserir" text="Inserir Registro" />
-                        <Button fx:id="botaoEditar" mnemonicParsing="false" onAction="#handleEditar" text="Editar Registro" />
-                        <Button fx:id="botaoDeletar" mnemonicParsing="false" onAction="#handleDeletar" text="Remover Registro" />
+                        <Button fx:id="buttonRetrieve" mnemonicParsing="false" onAction="#handleRetrieve" text="Recuperar Tabela" />
+                        <Button fx:id="buttonInsert" mnemonicParsing="false" onAction="#handleInsert" text="Inserir Registro" />
+                        <Button fx:id="buttonUpdate" mnemonicParsing="false" onAction="#handleUpdate" text="Editar Registro" />
+                        <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#handleDelete" text="Remover Registro" />
                      </children>
                   </HBox>
                </children>

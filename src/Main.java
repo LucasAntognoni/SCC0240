@@ -32,7 +32,7 @@ public class Main extends Application {
         root.setCenter(mainPane);
 
         // Compose Scene
-        Scene scene = new Scene(root, 640, 530);
+        Scene scene = new Scene(root, 640, 520);
         primaryStage.setTitle("Database View");
         primaryStage.setScene(scene);
         primaryStage.show();

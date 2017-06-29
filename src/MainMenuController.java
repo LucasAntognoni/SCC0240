@@ -12,10 +12,8 @@ public class MainMenuController extends AnchorPane {
 
     @FXML
     private MenuItem aboutView;
-
     @FXML
     private MenuItem reportView;
-
     @FXML
     private MenuItem managerView;
 

@@ -7,6 +7,6 @@ from atleta a
 	join preparador p on (p.preparador_id = eq.equipe_id)
 	join esporte e on (e.esporte_id = eq.esporte_id)
 	join nacao n on (a.nacao_id = n.nacao_id)
-where upper(e.nome) = 'FUTEBOL' 						 -- A
-			and upper(m.nome) = 'JORGE PEREIRA'    -- B
-			and upper(p.nome) = 'GUSTAVO BATISTA'; -- C
+where upper(e.nome) = 'FUTEBOL' 						 -- parametro: modalidade praticada pelo atleta
+			and upper(m.nome) = 'JORGE PEREIRA'    -- parametro: nome do médico responsável
+			and upper(p.nome) = 'GUSTAVO BATISTA'; -- parametro: nome do preparador

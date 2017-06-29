@@ -106,8 +106,7 @@ create table atleta (
     qpunicoes number(1) default 0 not null, -- atualizado por trigger
 
     constraint pk_atleta primary key (atleta_id),
-    constraint fk_atleta_nacao
-    foreign key (nacao_id) references nacao (nacao_id),
+    constraint fk_atleta_nacao foreign key (nacao_id) references nacao (nacao_id),
     constraint ck_atleta_sexo CHECK (sexo in ('Homem', 'Mulher')),
     constraint ck_atleta_registro CHECK (atleta_id > 0),
 

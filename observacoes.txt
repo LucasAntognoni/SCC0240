@@ -1,0 +1,15 @@
+01 - chave primaria de equipe não pode esporte, e sim preparador
+02 - entidade compõe composta por atlete+equipe (diferenca semantica)
+03 - nome atleta_participa
+     nome rotina_preparacao
+     nome rotina_recuperacao
+04 - preparador_telefones pk eh preparador+telefone (ou soh telefone)
+05 - medico_telefones pk eh medico+telefone (ou soh telefone)
+06 - esporte recebe id sintetico
+     nacao recebe id sintetico
+07 - relacao consulta recebeu chave sintetica
+08 - diagnostico perde 'id parcial'
+09 - ocorrencia ganha chave sintetica
+10 - superclasse participante omitida
+11 - isImpedido removido de entre os campos de atleta
+     funçao isAtletaImpedido implementada
